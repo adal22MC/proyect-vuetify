@@ -47,6 +47,13 @@
             </v-list-item-icon>
             <v-list-item-title>Mi Cuenta</v-list-item-title>
           </v-list-item>
+
+          <v-list-item to="/grafica">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Grafica</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

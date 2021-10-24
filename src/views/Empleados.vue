@@ -40,38 +40,46 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.employee_name"
-                      label="Nombre"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.employee_salary"
-                      label="Salario"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.employee_age"
-                      label="Edad"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation>
+                  <v-row>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="4"
+                    >
+                      <v-text-field
+                        v-model="editedItem.employee_name"
+                        :rules="nombreRules"
+                        label="Nombre"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="4"
+                    >
+                      <v-text-field
+                        v-model="editedItem.employee_salary"
+                        :rules="salarioRules"
+                        label="Salario"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="4"
+                    >
+                      <v-text-field
+                        v-model="editedItem.employee_age"
+                        :rules="edadRules"
+                        label="Edad"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-form>
               </v-container>
             </v-card-text>
 
@@ -88,6 +96,7 @@
                 color="blue darken-1"
                 text
                 @click="save"
+                :disabled="!valid"
               >
                 Guardar
               </v-btn>
@@ -169,6 +178,16 @@ import axios from 'axios'
         employee_salary: 0,
         employee_age: 0,
       },
+      valid: true,
+      nombreRules: [
+        v => !!v || 'Nombre requerido',
+      ],
+      salarioRules: [
+        v => !!v || 'Salario requerido',
+      ],
+      edadRules: [
+        v => !!v || 'Edad requerida',
+      ],
     }),
 
     computed: {
@@ -222,9 +241,10 @@ import axios from 'axios'
       },
 
       close () {
-        this.dialog = false
+        this.dialog = false       
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
+          this.resetValidation()
           this.editedIndex = -1
         })
       },
@@ -233,17 +253,34 @@ import axios from 'axios'
         this.dialogDelete = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
+          this.resetValidation()
           this.editedIndex = -1
         })
       },
 
       save () {
-        if (this.editedIndex > -1) {
+        this.validate
+        alert("el valor es "+this.valid)
+        if (this.valid) {
+          if (this.editedIndex > -1) {
           Object.assign(this.empleados[this.editedIndex], this.editedItem)
-        } else {
-          this.empleados.push(this.editedItem)
-        }
-        this.close()
+          } else {
+            this.empleados.push(this.editedItem)
+          }
+          this.close()
+        }else{
+          alert("llena los datos")
+        } 
+        
+      },
+      reset () {
+        this.$refs.form.reset()
+      },
+      resetValidation () {
+        this.$refs.form.resetValidation()
+      },
+      validate () {
+        this.$refs.form.validate()
       },
     },
   }
