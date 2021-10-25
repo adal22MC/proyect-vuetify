@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Empleados from '../views/Empleados.vue';
 import Graficas from '../views/Graficas.vue';
+import GenerarQR from '../views/GeneradorQR.vue';
 
 Vue.use(VueRouter)
 const routes = [{
@@ -28,6 +29,11 @@ const routes = [{
         path: '/grafica',
         name: 'Grafica',
         component: Graficas
+    },
+    {
+        path: '/generar-qr',
+        name: 'GenerarQR',
+        component: GenerarQR
     },
     {
         path: '*',

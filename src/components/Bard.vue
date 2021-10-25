@@ -50,10 +50,18 @@
 
           <v-list-item to="/grafica">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-chart-areaspline</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Grafica</v-list-item-title>
           </v-list-item>
+
+          <v-list-item to="/generar-qr">
+            <v-list-item-icon>
+              <v-icon>mdi-qrcode</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Generar QR</v-list-item-title>
+          </v-list-item>
+
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
